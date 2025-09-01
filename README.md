@@ -31,28 +31,25 @@
 
 ## :sparkles: Overview
 
-Understanding how humans leverage semantic knowledge to navigate unfamiliar environments and decide where to explore next is pivotal for developing robots capable of human-like search behaviors. We introduce a zero-shot navigation approach, Vision-Language Frontier Maps (VLFM), which is inspired by human reasoning and designed to navigate towards unseen semantic objects in novel environments. VLFM builds occupancy maps from depth observations to identify frontiers, and leverages RGB observations and a pre-trained vision-language model to generate a language-grounded value map. VLFM then uses this map to identify the most promising frontier to explore for finding an instance of a given target object category. We evaluate VLFM in photo-realistic environments from the Gibson, Habitat-Matterport 3D (HM3D), and Matterport 3D (MP3D) datasets within the Habitat simulator. Remarkably, VLFM achieves state-of-the-art results on all three datasets as measured by success weighted by path length (SPL) for the Object Goal Navigation task. Furthermore, we show that VLFM's zero-shot nature enables it to be readily deployed on real-world robots such as the Boston Dynamics Spot mobile manipulation platform. We deploy VLFM on Spot and demonstrate its capability to efficiently navigate to target objects within an office building in the real world, without any prior knowledge of the environment. The accomplishments of VLFM underscore the promising potential of vision-language models in advancing the field of semantic navigation.
+Understanding how humans leverage semantic knowledge to navigate unfamiliar environments and decide where to explore next is pivotal for developing robots capable of human-like search behaviors. We introduce a zero-shot navigation approach, Vision-Language Frontier Maps (VLFM), which is inspired by human reasoning and designed to navigate towards unseen semantic objects in novel environments. VLFM builds occupancy maps from depth observations to identify frontiers, and leverages RGB observations and a pre-trained vision-language model to generate a language-grounded value map. VLFM then uses this map to identify the most promising frontier to explore for finding an instance of a given target object category. 
+
+This repository is a fork of the official [project](https://github.com/bdaiinstitute/vlfm) maintained by the Boston Dynamics AI Institute, updated for compatibility with Python 3.10 and NVIDIA's Isaac Lab simulation platform.
 
 ## :hammer_and_wrench: Installation
 
 ### Getting Started
-Create the conda environment:
+Create the mamba environment:
 ```bash
-conda_env_name=vlfm
-conda create -n $conda_env_name python=3.9 -y
-conda activate $conda_env_name
-pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f https://download.pytorch.org/whl/torch_stable.html
-pip install git+https://github.com/IDEA-Research/GroundingDINO.git@eeba084341aaa454ce13cb32fa7fd9282fc73a67 salesforce-lavis==1.0.2
+mamba env create -f environment.yml
+mamba activate vlfm
 ```
-If you are using habitat and are doing simulation experiments, install this repo into your env with the following:
+
+Run the environment setup script to fetch dependencies, including YOLOv7, GroundingDINO and Mobile-SAM. This will install support for running VLFM on Isaac Sim and the Spot robot:
 ```bash
-pip install -e .[habitat]
+./environment_setup.sh
 ```
-If you are using the Spot robot, install this repo into your env with the following:
-```bash
-pip install -e .[reality]
-```
-#### [Whether you're using conda or not]
+
+<!-- #### [Whether you're using conda or not]
 Clone the following repo within this one (simply cloning will suffice):
 ```bash
 git clone git@github.com:WongKinYiu/yolov7.git
@@ -93,16 +90,16 @@ unzip objectnav_hm3d_v1.zip &&
 mkdir -p $DATA_DIR/datasets/objectnav/hm3d  &&
 mv objectnav_hm3d_v1 $DATA_DIR/datasets/objectnav/hm3d/v1 &&
 rm objectnav_hm3d_v1.zip
-```
+``` -->
 
-## :weight_lifting: Downloading weights for various models
+<!-- ## :weight_lifting: Downloading weights for various models
 The weights for MobileSAM, GroundingDINO, and PointNav must be saved to the `data/` directory. The weights can be downloaded from the following links:
 - `mobile_sam.pt`:  https://github.com/ChaoningZhang/MobileSAM
 - `groundingdino_swint_ogc.pth`: https://github.com/IDEA-Research/GroundingDINO
 - `yolov7-e6e.pt`: https://github.com/WongKinYiu/yolov7
 - `pointnav_weights.pth`: included inside the [data](data) subdirectory
-
-## :arrow_forward: Evaluation within Habitat
+ -->
+<!-- ## :arrow_forward: Evaluation within Habitat
 To run evaluation, various models must be loaded in the background first. This only needs to be done once by running the following command:
 ```bash
 ./scripts/launch_vlm_servers.sh
@@ -116,8 +113,8 @@ python -m vlfm.run
 ```
 To evaluate on MP3D, run the following:
 ```bash
-python -m vlfm.run habitat.dataset.data_path=data/datasets/objectnav/mp3d/val/val.json.gz
-```
+python -m vlfm.run habitat.dataset.data_path=data/datasets/objectnav/mp3d/val/val.json.gz 
+``` -->
 
 ## :newspaper: License
 
