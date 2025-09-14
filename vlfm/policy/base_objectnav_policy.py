@@ -21,17 +21,18 @@ from vlfm.vlm.grounding_dino import GroundingDINOClient, ObjectDetections
 from vlfm.vlm.sam import MobileSAMClient
 from vlfm.vlm.yolov7 import YOLOv7Client
 
-try:
-    from habitat_baselines.common.tensor_dict import TensorDict
+# TODO: uncomment this code eventually so we can import vlfm as is from the original git repo.
+# try:
+#     from habitat_baselines.common.tensor_dict import TensorDict
 
-    from vlfm.policy.base_policy import BasePolicy
-except Exception:
+#     from vlfm.policy.base_policy import BasePolicy
+# except Exception:
 
-    class BasePolicy:  # type: ignore
-        pass
+class BasePolicy:  # type: ignore
+    pass
 
 
-class BaseObjectNavPolicy(BasePolicy):
+class BaseObjectNavPolicy():
     _target_object: str = ""
     _policy_info: Dict[str, Any] = {}
     _object_masks: Union[np.ndarray, Any] = None  # set by ._update_object_map()

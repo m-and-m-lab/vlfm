@@ -11,41 +11,42 @@ from torch import Tensor
 
 habitat_version = ""
 
-try:
-    import habitat
-    from habitat_baselines.rl.ddppo.policy import PointNavResNetPolicy
+# TODO: uncomment this code eventually so we can import vlfm as is from the original git repo.
+# try:
+#     import habitat
+#     from habitat_baselines.rl.ddppo.policy import PointNavResNetPolicy
 
-    habitat_version = habitat.__version__
+#     habitat_version = habitat.__version__
 
-    if habitat_version == "0.1.5":
-        print("Using habitat 0.1.5; assuming SemExp code is being used")
+#     if habitat_version == "0.1.5":
+#         print("Using habitat 0.1.5; assuming SemExp code is being used")
 
-        class PointNavResNetTensorOutputPolicy(PointNavResNetPolicy):
-            def act(self, *args: Any, **kwargs: Any) -> Tuple[Tensor, Tensor]:
-                value, action, action_log_probs, rnn_hidden_states = super().act(*args, **kwargs)
-                return action, rnn_hidden_states
+#         class PointNavResNetTensorOutputPolicy(PointNavResNetPolicy):
+#             def act(self, *args: Any, **kwargs: Any) -> Tuple[Tensor, Tensor]:
+#                 value, action, action_log_probs, rnn_hidden_states = super().act(*args, **kwargs)
+#                 return action, rnn_hidden_states
 
-    else:
-        from habitat_baselines.common.tensor_dict import TensorDict
-        from habitat_baselines.rl.ppo.policy import PolicyActionData
+#     else:
+#         from habitat_baselines.common.tensor_dict import TensorDict
+#         from habitat_baselines.rl.ppo.policy import PolicyActionData
 
-        class PointNavResNetTensorOutputPolicy(PointNavResNetPolicy):  # type: ignore
-            def act(self, *args: Any, **kwargs: Any) -> Tuple[Tensor, Tensor]:
-                policy_actions: "PolicyActionData" = super().act(*args, **kwargs)
-                return policy_actions.actions, policy_actions.rnn_hidden_states
+#         class PointNavResNetTensorOutputPolicy(PointNavResNetPolicy):  # type: ignore
+#             def act(self, *args: Any, **kwargs: Any) -> Tuple[Tensor, Tensor]:
+#                 policy_actions: "PolicyActionData" = super().act(*args, **kwargs)
+#                 return policy_actions.actions, policy_actions.rnn_hidden_states
 
-    HABITAT_BASELINES_AVAILABLE = True
-except ModuleNotFoundError:
-    from vlfm.policy.utils.non_habitat_policy.nh_pointnav_policy import (
-        PointNavResNetPolicy,
-    )
+#     HABITAT_BASELINES_AVAILABLE = True
+# except ModuleNotFoundError:
+from vlfm.policy.utils.non_habitat_policy.nh_pointnav_policy import (
+    PointNavResNetPolicy,
+)
 
-    class PointNavResNetTensorOutputPolicy(PointNavResNetPolicy):  # type: ignore
-        """Already outputs a tensor, so no need to convert."""
+class PointNavResNetTensorOutputPolicy(PointNavResNetPolicy):  # type: ignore
+    """Already outputs a tensor, so no need to convert."""
 
-        pass
+    pass
 
-    HABITAT_BASELINES_AVAILABLE = False
+HABITAT_BASELINES_AVAILABLE = False
 
 
 class WrappedPointNavResNetPolicy:

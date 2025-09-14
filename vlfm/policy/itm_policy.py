@@ -12,13 +12,14 @@ from vlfm.mapping.value_map import ValueMap
 from vlfm.policy.base_objectnav_policy import BaseObjectNavPolicy
 from vlfm.policy.utils.acyclic_enforcer import AcyclicEnforcer
 from vlfm.utils.geometry_utils import closest_point_within_threshold
-from vlfm.vlm.blip2itm import BLIP2ITMClient
+from vlfm.vlm.blip2itm import BLIP2ITM
 from vlfm.vlm.detections import ObjectDetections
 
-try:
-    from habitat_baselines.common.tensor_dict import TensorDict
-except Exception:
-    pass
+# TODO: uncomment this code eventually so we can import vlfm as is from the original git repo.
+# try:
+#     from habitat_baselines.common.tensor_dict import TensorDict
+# except Exception:
+#     pass
 
 PROMPT_SEPARATOR = "|"
 
@@ -45,7 +46,7 @@ class BaseITMPolicy(BaseObjectNavPolicy):
         **kwargs: Any,
     ):
         super().__init__(*args, **kwargs)
-        self._itm = BLIP2ITMClient(port=int(os.environ.get("BLIP2ITM_PORT", "12182")))
+        self._itm = BLIP2ITM()
         self._text_prompt = text_prompt
         self._value_map: ValueMap = ValueMap(
             value_channels=len(text_prompt.split(PROMPT_SEPARATOR)),

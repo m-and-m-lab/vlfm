@@ -215,16 +215,15 @@ def draw_bounding_box(
         single_pixel = cv2.applyColorMap(single_pixel, cv2.COLORMAP_RAINBOW)
 
         # reshape to a single dimensional array
-        rand_color = single_pixel.reshape(3)
-        bgr_color = [int(c) for c in rand_color]  # type: ignore
+        color = single_pixel.reshape(3)
     else:
         # Convert RGB to BGR
         color = color[::-1]
-        bgr_color = [int(c) for c in color]
+    color = [int(c) for c in color]
 
     # Draw bounding box on image
     box_thickness = 2
-    cv2.rectangle(img, point1, point2, bgr_color, thickness=box_thickness)
+    cv2.rectangle(img, point1, point2, color, thickness=box_thickness)
 
     # Draw class name and score on image
     text_label = f"{class_name}: {int(score * 100)}%"
@@ -238,7 +237,7 @@ def draw_bounding_box(
         img,
         (text_x, text_y - 2 * text_size[1]),
         (text_x + text_size[0], text_y - text_size[1]),
-        bgr_color,
+        color,
         -1,
     )
     cv2.putText(

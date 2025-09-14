@@ -178,11 +178,13 @@ external
 src/logdir/
 src/pretrained_models/
 
-# Naoki's additions
-
+# Project-specific additions
+*.pt
 .DS_Store
 .idea/
 habitat-lab/
 GroundingDINO/
 __pycache__/
 *.pyc
+data/
+yolov7/
