@@ -188,3 +188,5 @@ __pycache__/
 *.pyc
 data/
 yolov7/
+vis/
+outputs/
