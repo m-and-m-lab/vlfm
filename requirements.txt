@@ -18,17 +18,17 @@ icu==0.0.1
 ifcfg==0.24
 iopath==0.1.10
 --extra-index-url https://pypi.nvidia.com
-isaacsim[all,extscache]==4.5.0.0
+isaacsim[all,extscache]==5.0.0
 lmdb==1.5.1
 loguru==0.7.2
 make==0.1.6.post2
 mkl==2024.0.0 
 natsort==8.4.0
-numba==0.60.0
-numpy==1.26.4
+numba==0.62.0
+# numpy==1.26.4
 nvtx==0.2.10
 objectio
-opencv-python==4.8.0.74
+opencv-python==4.10.0.84
 pandas==2.2.3
 plotly==5.24.1
 pybind11==2.13.6
@@ -36,20 +36,21 @@ pybullet==3.2.6
 pycocoevalcap==1.2
 pycocotools==2.0.8
 salesforce-lavis==1.0.2
-scikit-fmm==2024.9.16
+scikit-fmm==2025.06.23
 scikit-image==0.24.0
 scikit-learn==1.5.2
 seaborn==0.13.2
 simplejson==3.19.3
 six==1.16.0
-spacy==3.7.5
+spacy==3.8.0
 spot_wrapper@git+https://github.com/naokiyokoyama/bd_spot_wrapper.git
 supervision==0.24.0
 tensorboard==2.18.0
+thinc==8.3.0
 threadpoolctl==3.5.0
 timm==0.4.12
 torch-geometric==2.6.1
-transformers==4.26.1
+transformers==4.44.2
 trimesh==4.5.2
 yacs==0.1.8
 yapf==0.40.2
