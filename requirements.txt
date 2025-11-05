@@ -35,14 +35,14 @@ pybind11==2.13.6
 pybullet==3.2.6
 pycocoevalcap==1.2
 pycocotools==2.0.8
-salesforce-lavis==1.0.2
+# salesforce-lavis==1.0.2
 scikit-fmm==2025.06.23
 scikit-image==0.24.0
 scikit-learn==1.5.2
 seaborn==0.13.2
 simplejson==3.19.3
 six==1.16.0
-spacy==3.8.0
+spacy==3.8.2
 spot_wrapper@git+https://github.com/naokiyokoyama/bd_spot_wrapper.git
 supervision==0.24.0
 tensorboard==2.18.0
