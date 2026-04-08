@@ -476,4 +476,4 @@ dependencies:
       - yarl==1.18.3
       - yolov7==0.1.0
       - zipp==3.23.0
-prefix: /home/sanyam/miniconda3/envs/vlfm
+
