@@ -6,7 +6,8 @@
 export CUDA_HOME=$CONDA_PREFIX
 
 # install requirements
-pip install -r requirements.txt
+# pip install -r requirements.txt
+conda env create -f environment.yml
 
 # Set cmake prefix path for installing sophus
 SITE_PACKAGES_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
@@ -40,7 +41,7 @@ cd ..
 
 # Clone yolov7
 rm -rf yolov7
-git clone git@github.com:WongKinYiu/yolov7.git
+git clone https://github.com/chahyon-ku/yolov7.git
 
 # weights for grounding DINO and other models
 mkdir -p GroundingDINO/weights
