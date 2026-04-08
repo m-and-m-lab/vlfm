@@ -5,10 +5,6 @@
 # Set CUDA_HOME
 export CUDA_HOME=$CONDA_PREFIX
 
-# install requirements
-# pip install -r requirements.txt
-conda env create -f environment.yml
-
 # Set cmake prefix path for installing sophus
 SITE_PACKAGES_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
 PYBIND_11_DIR="$SITE_PACKAGES_DIR/pybind11/share/cmake/pybind11"
@@ -32,7 +28,7 @@ pip install --no-deps webdataset===0.1.40 faster-fifo open3d==0.19.0 sophuspy===
 rm -rf GroundingDINO
 
 # Clone GroundingDINO
-git clone https://github.com/IDEA-Research/GroundingDINO.git
+git clone https://github.com/chahyon-ku/grounding-dino GroundingDINO
 cd GroundingDINO
 pip install -e .
 
