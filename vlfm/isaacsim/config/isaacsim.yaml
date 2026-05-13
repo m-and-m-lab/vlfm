@@ -1,0 +1,47 @@
+# @package _global_
+
+# IsaacSim deployment config for VLFM. Mirrors the shape of
+# config/experiments/reality.yaml so the policy half is identical; the env half
+# is adapted for IsaacSim's continuous-velocity action path.
+
+defaults:
+  - /policy: vlfm_config_base
+  - _self_
+
+policy:
+    name: "IsaacSimITMPolicyV2"
+    pointnav_policy_path: "data/pointnav_weights.pth"
+    depth_image_shape: [212, 240]  # height, width
+    pointnav_stop_radius: 0.9
+    use_max_confidence: False
+    object_map_erosion_size: 5
+    exploration_thresh: 0.0
+    obstacle_map_area_threshold: 1.5  # square meters
+    text_prompt: "Seems like there is a target_object ahead."
+    min_obstacle_height: 0.1
+    max_obstacle_height: 1.5
+    agent_radius: 0.2
+
+env:
+  # Depth clipping (meters). Reality uses 2.5m for body cams; we default to
+  # 3.5m to match the `skills/config/spot_arm_cameras.yaml` defaults so the
+  # IsaacLab cameras' streamed depths aren't truncated before they reach VLFM.
+  max_body_cam_depth: 3.5
+  max_gripper_cam_depth: 5.0
+  # Continuous velocity caps (replaces reality's max_lin_dist/max_ang_dist
+  # displacement caps). max_lin_vel * time_step ≈ reality's max_lin_dist (0.2m)
+  # so the obstacle/value maps see comparable per-step displacements.
+  max_lin_vel: 0.3
+  max_ang_vel: 0.75
+  time_step: 0.7
+  max_steps: 500
+  goal: "office chair"
+
+isaaclab:
+  # Caller-managed handles. These are not read by Hydra alone — they live here
+  # so the launch script has a single place to look for the IsaacSim-specific
+  # tuning knobs.
+  sim_dt: 0.005
+  # Camera name list; must match keys in vlfm/isaacsim/robots/camera_ids.py
+  # and skills/config/spot_arm_cameras.yaml.
+  camera_names: [frontleft, frontright, hand]

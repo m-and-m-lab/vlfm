@@ -1,0 +1,40 @@
+# Smoke-test scene config. Same shape as
+# skills/locomotion/isaaclab_test/spot_locomotion_wasd.yaml, plus an `env` block
+# carrying the IsaacSim env params and an `isaaclab` block with sim_dt.
+
+robot:
+  usd_path: ../../../spot_model/spot_arm_w_cam.usd
+  position: [0.0, 0.0, 0.5]
+  rotation_wxyz: [1.0, 0.0, 0.0, 0.0]
+
+scene:
+  env_spacing: 2.5
+  dome_light_intensity: 2500.0
+  dome_light_color: [0.75, 0.75, 0.75]
+
+camera:
+  eye_offset: [2.0, 2.0, 1.2]
+  target_height_offset: 0.35
+
+# Cameras to attach to the robot articulation. Prim paths must match what
+# exists inside spot_arm_w_cam.usd; these mirror skills/config/spot_arm_cameras.yaml.
+cameras:
+  frontleft:
+    prim_path: "{ENV_REGEX_NS}/Robot/body/Gemini2_front_left/Orbbec_Gemini2/camera_ir_left/camera_left/Stream_depth"
+  frontright:
+    prim_path: "{ENV_REGEX_NS}/Robot/body/Gemini2_front_right/Orbbec_Gemini2/camera_ir_left/camera_left/Stream_depth"
+  hand:
+    prim_path: "{ENV_REGEX_NS}/Robot/arm_link_wr1/Gemini2_arm/Orbbec_Gemini2/camera_ir_left/camera_left/Stream_depth"
+
+# Env params consumed by IsaacSimObjectNavEnv.
+env:
+  max_body_cam_depth: 3.5
+  max_gripper_cam_depth: 5.0
+  max_lin_vel: 0.3
+  max_ang_vel: 0.75
+  time_step: 0.7
+  max_steps: 50
+  goal: "office chair"
+
+isaaclab:
+  sim_dt: 0.005
