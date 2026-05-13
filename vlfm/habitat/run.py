@@ -19,11 +19,11 @@ from hydra.core.config_search_path import ConfigSearchPath
 from hydra.plugins.search_path_plugin import SearchPathPlugin
 from omegaconf import DictConfig
 
-import vlfm.measurements.traveled_stairs  # noqa: F401
-import vlfm.obs_transformers.resize  # noqa: F401
-import vlfm.policy.action_replay_policy  # noqa: F401
-import vlfm.policy.habitat_policies  # noqa: F401
-import vlfm.utils.vlfm_trainer  # noqa: F401
+import vlfm.habitat.measurements.traveled_stairs  # noqa: F401
+import vlfm.habitat.obs_transformers.resize  # noqa: F401
+import vlfm.habitat.policies.action_replay_policy  # noqa: F401
+import vlfm.habitat.policies.habitat_policies  # noqa: F401
+import vlfm.habitat.utils.vlfm_trainer  # noqa: F401
 
 
 class HabitatConfigPlugin(SearchPathPlugin):
@@ -36,14 +36,14 @@ register_hydra_plugin(HabitatConfigPlugin)
 
 @hydra.main(
     version_base=None,
-    config_path="../config",
+    config_path="config",
     config_name="experiments/vlfm_objectnav_hm3d",
 )
 def main(cfg: DictConfig) -> None:
     assert os.path.isdir("data"), "Missing 'data/' directory!"
     if not os.path.isfile("data/dummy_policy.pth"):
         print("Dummy policy weights not found! Please run the following command first:")
-        print("python -m vlfm.utils.generate_dummy_policy")
+        print("python -m vlfm.habitat.utils.generate_dummy_policy")
         exit(1)
 
     cfg = patch_config(cfg)

@@ -1,0 +1,2 @@
+policy_path: policy.pt
+env_config_path: env.yaml

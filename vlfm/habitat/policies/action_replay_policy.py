@@ -14,7 +14,7 @@ from habitat_baselines.rl.ppo.policy import PolicyActionData
 from omegaconf import DictConfig
 
 from vlfm.mapping.obstacle_map import ObstacleMap
-from vlfm.policy.base_policy import BasePolicy
+from vlfm.habitat.policies.base_policy import BasePolicy
 from vlfm.utils.geometry_utils import xyz_yaw_to_tf_matrix
 
 

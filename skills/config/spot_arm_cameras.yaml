@@ -1,0 +1,19 @@
+camera_groups:
+  grasp: [frontleft, frontright, hand]
+  depth_collision: [frontleft, frontright, hand]
+
+defaults:
+  data_types: [distance_to_image_plane, rgb]
+  depth_filter:
+    min_depth_m: 0.0
+    max_depth_m: 3.5
+
+cameras:
+  frontleft:
+    prim_path: "{ENV_REGEX_NS}/Robot/body/Gemini2_front_left/Orbbec_Gemini2/camera_ir_left/camera_left/Stream_depth"
+  frontright:
+    prim_path: "{ENV_REGEX_NS}/Robot/body/Gemini2_front_right/Orbbec_Gemini2/camera_ir_left/camera_left/Stream_depth"
+  hand:
+    prim_path: "{ENV_REGEX_NS}/Robot/arm_link_wr1/Gemini2_arm/Orbbec_Gemini2/camera_ir_left/camera_left/Stream_depth"
+    crop:
+      left: 38

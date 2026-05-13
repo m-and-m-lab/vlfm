@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copyright [2023] Boston Dynamics AI Institute, Inc.
 
-python -um zsos.run \
+python -um vlfm.habitat.run \
   --config-name=objectnav/ddppo_objectnav_hm3d.yaml \
   habitat_baselines.evaluate=True \
   habitat_baselines.eval_ckpt_path_dir=dummy_policy.pth \

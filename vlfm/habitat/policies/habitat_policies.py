@@ -21,9 +21,9 @@ from torch import Tensor
 from vlfm.utils.geometry_utils import xyz_yaw_to_tf_matrix
 from vlfm.vlm.grounding_dino import ObjectDetections
 
-from ..mapping.obstacle_map import ObstacleMap
-from .base_objectnav_policy import BaseObjectNavPolicy, VLFMConfig
-from .itm_policy import ITMPolicy, ITMPolicyV2, ITMPolicyV3
+from vlfm.mapping.obstacle_map import ObstacleMap
+from vlfm.policy.base_objectnav_policy import BaseObjectNavPolicy, VLFMConfig
+from vlfm.policy.itm_policy import ITMPolicy, ITMPolicyV2, ITMPolicyV3
 
 HM3D_ID_TO_NAME = ["chair", "bed", "potted plant", "toilet", "tv", "couch"]
 MP3D_ID_TO_NAME = [

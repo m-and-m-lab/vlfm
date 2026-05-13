@@ -156,7 +156,7 @@ class VLFMTrainer(PPOTrainer):
         pbar = tqdm.tqdm(total=number_of_eval_episodes * evals_per_ep)
         self._agent.eval()
 
-        from vlfm.utils.habitat_visualizer import HabitatVis
+        from vlfm.habitat.utils.habitat_visualizer import HabitatVis
 
         num_successes = 0
         num_total = 0
@@ -267,7 +267,7 @@ class VLFMTrainer(PPOTrainer):
                     num_total += 1
                     print(f"Success rate: {num_successes / num_total * 100:.2f}% ({num_successes} out of {num_total})")
 
-                    from vlfm.utils.episode_stats_logger import (
+                    from vlfm.habitat.utils.episode_stats_logger import (
                         log_episode_stats,
                     )
 

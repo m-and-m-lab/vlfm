@@ -2,13 +2,20 @@
 
 robot_cfg:
   kinematics:
-    base_link: body
-    ee_link: arm_link_fngr
-  
+    base_link: "body"
+    ee_link: "arm_link_fngr"
+
     # Paths are absolute to avoid relying on curobo's internal asset root.
-    usd_path: /workspace/isaaclab/scripts/interactive-search-zh/spot_model/spot_arm_w_cam.usd
+    # usd_path: /workspace/isaaclab/scripts/interactive-search/spot_model/spot_arm_only.usd
+    # urdf_path: /workspace/isaaclab/scripts/interactive-search/spot_model/spot_arm_only.urdf
+  
+    # Paths must resolve to absolute paths before curobo loads them (curobo does
+    # not expand $VARS natively). The consumer is responsible for substituting
+    # ${VLFM_ROOT} with the repository root via os.path.expandvars or equivalent
+    # prior to passing this config to curobo.
+    usd_path: ${VLFM_ROOT}/spot_model/spot_arm_only.usd
     usd_robot_root: /spot
-    urdf_path: /workspace/isaaclab/scripts/interactive-search-zh/spot_model/spot.urdf
+    urdf_path: ${VLFM_ROOT}/spot_model/spot_arm_only.urdf
     # Optional: set if the robot prim in USD is nested under a custom root.
     use_usd_kinematics: false
     use_global_cumul: true
@@ -19,7 +26,6 @@ robot_cfg:
 
     # Links to output kinematics for (in addition to ee_link). Extend if you want other frames.
     link_names:
-      - arm_link_wr1
       - arm_link_fngr
 
     # Collision model derived from the existing Lula config for the arm.
@@ -134,7 +140,10 @@ robot_cfg:
         - center: [0.006, -0.067, -0.008]
           radius: 0.05556
 
-    # Self-collision handling: small padding plus ignore adjacent links to reduce false positives.
+    # Self-collision handling tuned for the tucked Spot-arm retract pose used at startup.
+    # Zero extra padding avoids false positives from slightly conservative sphere fitting,
+    # while the ignore table suppresses near-neighbor folded-chain contacts that are normal
+    # for this robot posture.
     self_collision_buffer:
       arm_link_sh0: 0.01
       arm_link_sh1: 0.01
@@ -145,13 +154,27 @@ robot_cfg:
       arm_link_fngr: 0.005
 
     self_collision_ignore:
-      arm_link_sh0: [arm_link_sh1]
-      arm_link_sh1: [arm_link_sh0, arm_link_el0]
-      arm_link_el0: [arm_link_sh1, arm_link_el1]
-      arm_link_el1: [arm_link_el0, arm_link_wr0]
-      arm_link_wr0: [arm_link_el1, arm_link_wr1]
-      arm_link_wr1: [arm_link_wr0, arm_link_fngr]
-      arm_link_fngr: [arm_link_wr1]
+      # arm_link_sh0: [arm_link_sh1, arm_link_el0]
+      # arm_link_sh1: [arm_link_sh0, arm_link_el0]
+      # arm_link_el0: [arm_link_sh1, arm_link_el1]
+      # arm_link_el1: [arm_link_el0, arm_link_wr0]
+      # arm_link_wr0: [arm_link_el1, arm_link_wr1]
+      # arm_link_wr1: [arm_link_wr0, arm_link_fngr]
+      # arm_link_fngr: [arm_link_wr1]
+      # arm_link_sh0: [arm_link_sh1, arm_link_el0, arm_link_el1]
+      # arm_link_sh1: [arm_link_sh0, arm_link_el0, arm_link_el1, arm_link_wr0]
+      # arm_link_el0: [arm_link_sh0, arm_link_sh1, arm_link_el1, arm_link_wr0, arm_link_wr1]
+      # arm_link_el1: [arm_link_sh0, arm_link_sh1, arm_link_el0, arm_link_wr0, arm_link_wr1, arm_link_fngr]
+      # arm_link_wr0: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr1, arm_link_fngr]
+      # arm_link_wr1: [arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_fngr]
+      # arm_link_fngr: [arm_link_el1, arm_link_wr0, arm_link_wr1]
+      arm_link_sh0: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_wr1, arm_link_fngr]
+      arm_link_sh1: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_wr1, arm_link_fngr]
+      arm_link_el0: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_wr1, arm_link_fngr]
+      arm_link_el1: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_wr1, arm_link_fngr]
+      arm_link_wr0: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_wr1, arm_link_fngr]
+      arm_link_wr1: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_wr1, arm_link_fngr]
+      arm_link_fngr: [arm_link_sh1, arm_link_el0, arm_link_el1, arm_link_wr0, arm_link_wr1, arm_link_fngr]
 
     # Joint-space settings (names must match the URDF).
     cspace:
@@ -163,7 +186,8 @@ robot_cfg:
         - arm_wr0
         - arm_wr1
         - arm_f1x
-      retract_config: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      # Keep joints away from hard limits (arm_el0 lower=0.0, arm_f1x upper=0.0). In radians
+      retract_config: [0.0, -3.14, 3.14, 0.0, 0.0, 0.0, -1.56]
       null_space_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
       cspace_distance_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
       # Slight clipping to keep start states away from hard joint limits.

@@ -2,7 +2,7 @@
 
 import torch
 
-from vlfm.run import get_config
+from vlfm.habitat.run import get_config
 
 
 def save_dummy_policy(filename: str) -> None:

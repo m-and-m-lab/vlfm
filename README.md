@@ -33,7 +33,7 @@
 
 Understanding how humans leverage semantic knowledge to navigate unfamiliar environments and decide where to explore next is pivotal for developing robots capable of human-like search behaviors. We introduce a zero-shot navigation approach, Vision-Language Frontier Maps (VLFM), which is inspired by human reasoning and designed to navigate towards unseen semantic objects in novel environments. VLFM builds occupancy maps from depth observations to identify frontiers, and leverages RGB observations and a pre-trained vision-language model to generate a language-grounded value map. VLFM then uses this map to identify the most promising frontier to explore for finding an instance of a given target object category. 
 
-This repository is a fork of the official [project](https://github.com/bdaiinstitute/vlfm) maintained by the Boston Dynamics AI Institute, updated for compatibility with Python 3.10 and NVIDIA's Isaac Lab simulation platform.
+This repository is a fork of the official [project](https://github.com/bdaiinstitute/vlfm) maintained by the Boston Dynamics AI Institute, updated for compatibility with Python 3.11 and NVIDIA's Isaac Lab simulation platform.
 
 ## :hammer_and_wrench: Installation
 
@@ -118,11 +118,13 @@ python -m vlfm.run habitat.dataset.data_path=data/datasets/objectnav/mp3d/val/va
 
 ## :newspaper: License
 
-VLFM is released under the [MIT License](LICENSE). This code was produced as part of Naoki Yokoyama's internship at the Boston Dynamics AI Institute in Summer 2023 and is provided "as is" without active maintenance. For questions, please contact [Naoki Yokoyama](http://naoki.io) or [Jiuguang Wang](https://www.robo.guru).
+VLFM is released under the [MIT License](LICENSE). This code was produced as part of Naoki Yokoyama's internship at the Boston Dynamics AI Institute in Summer 2023. The [Mapping and Motion Lab](https://sites.google.com/umich.edu/mandmlab/home) maintains this fork and contributed code to support newer Python versions as well as compatibility with IsaacSim without making any modifications to the original functionality. 
+
+<!-- and is provided "as is" without active maintenance. For questions, please contact [Naoki Yokoyama](http://naoki.io) or [Jiuguang Wang](https://www.robo.guru). -->
 
 ## :black_nib: Citation
 
-If you use VLFM in your research, please use the following BibTeX entry.
+If you use VLFM in your research, please use the following BibTeX entry corresponding to the original publication.
 
 ```
 @inproceedings{yokoyama2024vlfm,
